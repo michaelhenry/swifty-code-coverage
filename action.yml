@@ -1,0 +1,50 @@
+name: 'swifty-code-coverage'
+description: 'An action that generates code coverage report for swift projects (iOS, macOS, spm, etc).'
+
+branding:
+  icon: 'activity'
+  color: 'green'
+
+inputs:
+  build-path:
+    description: "Build path. Either the DerivedData (iOS or macOS) or .build folder(for SPM)."
+    required: true
+  target:
+    description: "Either the .app (iOS or macOS app, eg. MyApp.app) or the .xctest (SPM, Eg. MyAppTests.xctest)"
+    required: true
+  is-spm:
+    description: "is the project is an SPM project?"
+    required: false
+    default: false
+  ignore-filename-regex:
+    description: "Filename regex to be ignored. default is `.build|Tests|Pods|Carthage|DerivedData`"
+    required: false
+    default: ".build|Tests|Pods|Carthage|DerivedData"
+  output:
+    description: "The output file. default is `coverage/lcov.info`"
+    required: false
+    default: "coverage/lcov.info"
+  output-artifact-name:
+    description: "The name of the output artifact. default is 'code-coverage-artifact'"
+    required: false
+    default: "code-coverage-artifact"
+runs:
+  using: "composite"
+  steps:
+    - if: runner.os == 'Linux'
+      run: |
+        brew install llvm
+      shell: bash
+
+    - name: Generate lcov file
+      run: |
+        sh $GITHUB_ACTION_PATH/lcov.sh --build-path "${{ inputs.build-path }}" --target "${{ inputs.target }}" --is-spm "${{ inputs.is-spm }}" --ignore-filename-regex "${{ inputs.ignore-filename-regex }}" --output "${{ inputs.output }}"
+      shell: bash
+
+    - name: Archive the code coverage file (lcov)
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.output-artifact-name }}
+        path: |
+          ${{ inputs.output }}
