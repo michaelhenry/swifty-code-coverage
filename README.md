@@ -11,7 +11,7 @@ Here is an actual workflow (https://github.com/michaelhenry/create-report/action
 ```yml
 jobs:
   code-coverage-report:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Test
         uses: actions/checkout@v1
@@ -53,3 +53,5 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 ```
+
+> For some reason even though the code-coverage was generate from the same llvm version, codeclimate is returning an error " ./cc-test-reporter: cannot execute binary file: Exec format error" when using an ubuntu machine.
