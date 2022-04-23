@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: swift test --enable-code-coverage
+      - uses: ./
+        with:
+          build-path: .build
+          target: SamplePackageTests.xctest
+          is-spm: true
+          output: "coverage/lcov.info"
+          output-artifact-name: "codecov-artifact"
+      - name: Upload to Codecov
+        run: |
+          bash <(curl https://codecov.io/bash) -f "coverage/*.info"
+        shell: bash
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
