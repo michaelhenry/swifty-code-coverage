@@ -2,6 +2,8 @@
 
 A github action for generating code coverage report for your ios/macos/spm project.
 
+[![codecov](https://codecov.io/gh/michaelhenry/swifty-code-coverage/branch/main/graph/badge.svg?token=I7B7SJCM34)](https://codecov.io/gh/michaelhenry/swifty-code-coverage)
+
 ## Example
 
 Here is an actual workflow (https://github.com/michaelhenry/create-report/actions/runs/2156329862) that uses this action and it produced a codecov report on this PR (https://github.com/michaelhenry/create-report/pull/14).
