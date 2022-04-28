@@ -45,15 +45,13 @@ jobs:
           build-path: DerivedData
           target: App.app
           is-spm: false
-      - name: Upload to Code Climate
-        run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
-          ./cc-test-reporter after-build --coverage-input-type lcov
-        shell: bash
+      - name: Publish to code climate
+        uses: paambaati/codeclimate-action@v3.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageLocations: |
+            coverage/lcov.info:lcov
 ```
 
 > For some reason even though the code-coverage was generate from the same llvm version, codeclimate is returning an error " ./cc-test-reporter: cannot execute binary file: Exec format error" when using an ubuntu machine.
