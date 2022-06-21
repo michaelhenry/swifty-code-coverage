@@ -18,7 +18,7 @@ jobs:
       - name: Test
         uses: actions/checkout@v1
       - run: swift test --enable-code-coverage
-      - uses: ./.github/actions/lcov
+      - uses: michaelhenry/swifty-code-coverage@v1.0.0
         with:
           build-path: .build
           target: GithubChecksPackageTests.xctest
@@ -39,7 +39,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v1
-      - run: xcodebuild test -project App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone X,OS=13.0' -enableCodeCoverage YES
+      - run: xcodebuild test -project App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone X,OS=13.0' -enableCodeCoverage YES -derivedDataPath DerivedData
       - uses: michaelhenry/swifty-code-coverage@v1.0.0
         with:
           build-path: DerivedData
@@ -55,3 +55,31 @@ jobs:
 ```
 
 > For some reason even though the code-coverage was generate from the same llvm version, codeclimate is returning an error " ./cc-test-reporter: cannot execute binary file: Exec format error" when using an ubuntu machine.
+
+## Note
+
+If your project is an SPM project, please use the `.xctest` file as `target` which was generated from `swift test --enable-code-coverage` and set the `is-spm` to `true`.
+
+Eg.
+
+```yml
+  - run: swift test --enable-code-coverage
+  - uses: michaelhenry/swifty-code-coverage@v1.0.0
+    with:
+      build-path: .build
+      target: AppTests.xctest
+      is-spm: true
+```
+
+Otherwise, if your project is an ios/macos that uses the `xcodebuild test` to test, please use the `.app` as `target` which was the file generated from the `xcodebuild test -enableCodeCoverage YES`  and set the `is-spm` to `false`.
+
+Eg.
+
+```yml
+  - run: xcodebuild test -project App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone X,OS=13.0' -enableCodeCoverage YES -derivedDataPath DerivedData
+  - uses: michaelhenry/swifty-code-coverage@v1.0.0
+    with:
+      build-path: DerivedData
+      target: App.app
+      is-spm: false
+```
