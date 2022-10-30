@@ -36,8 +36,8 @@ runs:
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && \
         brew install llvm && \
         brew --cellar llvm && \
-        #PATH="$PATH:/home/linuxbrew/.linuxbrew/Cellar/llvm/15.0.3/bin"
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        ls /home/linuxbrew/.linuxbrew/Cellar/
+        PATH="$PATH:/home/linuxbrew/.linuxbrew/Cellar/llvm/15.0.3/bin"
       shell: bash
 
     - name: Generate lcov file
