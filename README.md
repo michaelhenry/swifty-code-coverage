@@ -83,3 +83,20 @@ Eg.
       target: App.app
       is-spm: false
 ```
+
+## FAQ
+
+How to ignore view controllers file?
+
+Just add the regex for `*ViewController.swift` as `ignore-filename-regex` param.
+
+For example:
+
+```yml
+- uses: michaelhenry/swifty-code-coverage@v1.0.0
+  with:
+    build-path: DerivedData
+    target: Demo.app
+    is-spm: false
+    ignore-filename-regex: '^[\w,\s-]+ViewController\.swift$'
+```
