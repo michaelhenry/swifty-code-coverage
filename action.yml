@@ -59,7 +59,8 @@ runs:
       run: |
         echo "\`\`\`" >> cov_report.md && \
         cat coverage.txt >> cov_report.md && \
-        echo "\`\`\`" >> cov_report.md
+        echo "\`\`\`" >> cov_report.md && \
+        echo "markdownify==0.10.3" > requirements.txt
       shell: bash
 
     - name: Create Coverage Report
