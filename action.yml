@@ -34,13 +34,13 @@ runs:
     - if: runner.os == 'Linux'
       run: |
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && \
-        brew install llvm && \
-        brew info llvm
+        brew install llvm@15.0.3 && \
       shell: bash
 
     - name: Generate lcov file
       run: |
-        sh $GITHUB_ACTION_PATH/lcov.sh --build-path "${{ inputs.build-path }}" --target "${{ inputs.target }}" --is-spm "${{ inputs.is-spm }}" --ignore-filename-regex "${{ inputs.ignore-filename-regex }}" --output "${{ inputs.output }}"
+        PATH="$PATH:/home/linuxbrew/.linuxbrew/Cellar/llvm/15.0.3"
+        sh $GITHUB_ACTION_PATH/lcov.sh --build-path "${{ inputs.build-path }}" --target "${{ inputs.target }}" --is-spm "${{ inputs.is-spm }}" --ignore-filename-regex "${{ inputs.ignore-filename-regex }}" --output "${{ inputs.output }}" | tee coverage.txt
       shell: bash
 
     - name: Archive the code coverage file (lcov)
@@ -50,3 +50,4 @@ runs:
         name: ${{ inputs.output-artifact-name }}
         path: |
           ${{ inputs.output }}
+          coverage.txt
