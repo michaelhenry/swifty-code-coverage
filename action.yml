@@ -32,13 +32,18 @@ runs:
   using: "composite"
   steps:
     - if: runner.os == 'Linux'
+      name: Generate coverage file (Linux)
       run: |
-        brew install llvm
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && \
+        brew install llvm && \
+        PATH="$PATH:$(brew --prefix llvm)/bin" && \
+        sh $GITHUB_ACTION_PATH/lcov.sh --build-path "${{ inputs.build-path }}" --target "${{ inputs.target }}" --is-spm "${{ inputs.is-spm }}" --ignore-filename-regex "${{ inputs.ignore-filename-regex }}" --output "${{ inputs.output }}" | tee coverage.txt
       shell: bash
 
-    - name: Generate lcov file
+    - if: runner.os == 'macOS'
+      name: Generate coverage file (macOS)
       run: |
-        sh $GITHUB_ACTION_PATH/lcov.sh --build-path "${{ inputs.build-path }}" --target "${{ inputs.target }}" --is-spm "${{ inputs.is-spm }}" --ignore-filename-regex "${{ inputs.ignore-filename-regex }}" --output "${{ inputs.output }}"
+        sh $GITHUB_ACTION_PATH/lcov.sh --build-path "${{ inputs.build-path }}" --target "${{ inputs.target }}" --is-spm "${{ inputs.is-spm }}" --ignore-filename-regex "${{ inputs.ignore-filename-regex }}" --output "${{ inputs.output }}" | tee coverage.txt
       shell: bash
 
     - name: Archive the code coverage file (lcov)
@@ -48,3 +53,11 @@ runs:
         name: ${{ inputs.output-artifact-name }}
         path: |
           ${{ inputs.output }}
+
+    - name: Archive the code coverage file (textfile)
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-textfile
+        path: |
+          coverage.txt
