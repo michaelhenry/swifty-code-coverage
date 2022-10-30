@@ -86,7 +86,7 @@ Eg.
 
 ## FAQ
 
-### How to ignore view controllers file?
+### How to ignore view controller files?
 
 Just add the regex for `*ViewController.swift` as `ignore-filename-regex` param.
 
