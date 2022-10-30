@@ -60,6 +60,7 @@ runs:
         echo "\`\`\`" >> cov_report.md && \
         cat coverage.txt >> cov_report.md && \
         echo "\`\`\`" >> cov_report.md
+      shell: bash
 
     - name: Create Coverage Report
       if: always()
