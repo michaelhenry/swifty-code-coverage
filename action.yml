@@ -35,7 +35,7 @@ runs:
       run: |
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && \
         brew install llvm && \
-        ls /home/linuxbrew/.linuxbrew/Cellar/llvm/15.0.3/bin
+        which llvm
       shell: bash
 
     - name: Generate lcov file
@@ -51,4 +51,11 @@ runs:
         name: ${{ inputs.output-artifact-name }}
         path: |
           ${{ inputs.output }}
+
+    - name: Archive the code coverage file (textfile)
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-textfile
+        path: |
           coverage.txt
