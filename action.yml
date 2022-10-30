@@ -64,7 +64,7 @@ runs:
 
     - name: Create Coverage Report
       if: always()
-      uses: michaelhenry/create-report@v2.0.3
+      uses: michaelhenry/create-report@v2.0.4
       with:
         title: "Coverage Report on ${{ runner.os }}"
         path: cov_report.md
