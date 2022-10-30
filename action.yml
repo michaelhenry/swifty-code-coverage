@@ -35,6 +35,7 @@ runs:
       run: |
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && \
         brew install llvm@15.0.3 && \
+        ls /home/linuxbrew/.linuxbrew/Cellar/llvm/15.0.3/
       shell: bash
 
     - name: Generate lcov file
