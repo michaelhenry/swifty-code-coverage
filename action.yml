@@ -34,14 +34,12 @@ runs:
     - if: runner.os == 'Linux'
       run: |
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && \
-        brew install llvm && \
-        brew --cellar llvm && \
-        ls /home/linuxbrew/.linuxbrew/Cellar/llvm
-        export PATH="$PATH:/home/linuxbrew/.linuxbrew/Cellar/llvm/15.0.3/bin"
+        brew install llvm
       shell: bash
 
     - name: Generate lcov file
       run: |
+        PATH="$PATH:$(brew --prefix llvm)/bin"
         sh $GITHUB_ACTION_PATH/lcov.sh --build-path "${{ inputs.build-path }}" --target "${{ inputs.target }}" --is-spm "${{ inputs.is-spm }}" --ignore-filename-regex "${{ inputs.ignore-filename-regex }}" --output "${{ inputs.output }}" | tee coverage.txt
       shell: bash
 
