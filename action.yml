@@ -32,14 +32,17 @@ runs:
   using: "composite"
   steps:
     - if: runner.os == 'Linux'
+      name: Generate coverage file (Linux)
       run: |
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && \
-        brew install llvm
+        brew install llvm && \
+        PATH="$PATH:$(brew --prefix llvm)/bin" && \
+        sh $GITHUB_ACTION_PATH/lcov.sh --build-path "${{ inputs.build-path }}" --target "${{ inputs.target }}" --is-spm "${{ inputs.is-spm }}" --ignore-filename-regex "${{ inputs.ignore-filename-regex }}" --output "${{ inputs.output }}" | tee coverage.txt
       shell: bash
 
-    - name: Generate lcov file
+    - if: runner.os == 'macOS'
+      name: Generate coverage file (macOS)
       run: |
-        PATH="$PATH:$(brew --prefix llvm)/bin"
         sh $GITHUB_ACTION_PATH/lcov.sh --build-path "${{ inputs.build-path }}" --target "${{ inputs.target }}" --is-spm "${{ inputs.is-spm }}" --ignore-filename-regex "${{ inputs.ignore-filename-regex }}" --output "${{ inputs.output }}" | tee coverage.txt
       shell: bash
 
