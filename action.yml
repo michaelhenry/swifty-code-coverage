@@ -54,10 +54,17 @@ runs:
         path: |
           ${{ inputs.output }}
 
-    - name: Archive the code coverage file (textfile)
+    - name: Prepare Run Report
       if: always()
-      uses: actions/upload-artifact@v3
+      run: |
+        echo "\`\`\`" >> cov_report.md && \
+        cat coverage.txt >> cov_report.md && \
+        echo "\`\`\`" >> cov_report.md
+
+    - name: Create Coverage Report
+      if: always()
+      uses: michaelhenry/create-report@v2.0.0
       with:
-        name: coverage-textfile
-        path: |
-          coverage.txt
+        title: "Coverage Report"
+        path: cov_report.md
+        format: markdown
