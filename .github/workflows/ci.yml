@@ -13,8 +13,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test-ubuntu:
-    runs-on: macos-latest
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
       - run: swift test --enable-code-coverage
