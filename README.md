@@ -108,3 +108,9 @@ Eg.
 
 <img width="1302" alt="Screen Shot 2022-11-02 at 01 51 54" src="https://user-images.githubusercontent.com/717992/199263153-22d35899-66d9-404a-b682-0b453de314a8.png">
 
+## Sample Apps or libraries that uses this action that you can use as basis
+- [michaelhenry/Prettier.swift](https://github.com/michaelhenry/Prettier.swift)
+- [michaelhenry/create-report](https://github.com/actions-marketplace-validations/create-report)
+- [michaelhenry/SimpleXMLParser](https://github.com/michaelhenry/SimpleXMLParser)
+- [lukeredpath/swift-responsive-textfield](https://github.com/lukeredpath/swift-responsive-textfield)
+- [shayan18/ApiClient-iOS](https://github.com/shayan18/ApiClient-iOS)
