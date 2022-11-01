@@ -100,3 +100,11 @@ For example:
     is-spm: false
     ignore-filename-regex: '^[\w,\s-]+ViewController\.swift$'
 ```
+### Don't want to use other third party code coverage service?
+
+You can still view the code coverage report from the logs(stdout) of llvm-cov report.
+
+Eg.
+
+<img width="1302" alt="Screen Shot 2022-11-02 at 01 51 54" src="https://user-images.githubusercontent.com/717992/199263153-22d35899-66d9-404a-b682-0b453de314a8.png">
+
