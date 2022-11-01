@@ -100,7 +100,7 @@ For example:
     is-spm: false
     ignore-filename-regex: '^[\w,\s-]+ViewController\.swift$'
 ```
-### Don't want to use other third party code coverage service?
+### Don't want to use other third party code coverage service for the report or analysis?
 
 You can still view the code coverage report from the logs(stdout) of llvm-cov report.
 
