@@ -61,8 +61,7 @@ fi
 $LLVM_COV_CMD report \
   "$OBJECT_FILE" \
   --instr-profile=$INSTR_PROFILE \
-  --ignore-filename-regex=$IGNORE_FILENAME_REGEX \
-  --use-color
+  --ignore-filename-regex=$IGNORE_FILENAME_REGEX
 
 # Export to code coverage file
 $LLVM_COV_CMD export \
