@@ -66,6 +66,6 @@ runs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: coverage-textfile
+        name: build files
         path: |
           ${{ inputs.build-path }}
