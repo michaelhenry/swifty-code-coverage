@@ -22,12 +22,15 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: swift test --enable-code-coverage
+      - name: show all files
+        shell: bash
+        run: ls -a
       - name: Archive the build for debugging
         uses: actions/upload-artifact@v4
         with:
           name: build-files-{{ matrix.os }}
           path: |
-            .build
+            .build/
       - uses: ./
         name: Run swifty-code-coverage
         with:
