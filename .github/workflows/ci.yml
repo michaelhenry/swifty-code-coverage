@@ -24,7 +24,9 @@ jobs:
       - run: swift test --enable-code-coverage
       - name: show all files
         shell: bash
-        run: ls -a
+        run: |
+            cd .build
+            ls -a
       - name: Archive the build for debugging
         uses: actions/upload-artifact@v4
         with:
