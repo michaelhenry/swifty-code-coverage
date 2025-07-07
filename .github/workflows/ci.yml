@@ -22,11 +22,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: swift test --enable-code-coverage  --build-path build-files
-      - name: show all files
-        shell: bash
-        run: |
-            cd .build
-            ls -a
       - name: Archive the build for debugging
         uses: actions/upload-artifact@v4
         with:
