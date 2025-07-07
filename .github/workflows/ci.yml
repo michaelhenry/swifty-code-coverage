@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.ref }}
@@ -20,11 +21,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
-      - run: swift test --enable-code-coverage
+      - run: swift test --enable-code-coverage  --build-path build-files
+      - name: Archive the build for debugging
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-files-${{ matrix.os }}
+          path: |
+            build-files
       - uses: ./
         name: Run swifty-code-coverage
         with:
-          build-path: .build
+          build-path: build-files
           target: SamplePackageTests.xctest
           is-spm: true
           output: "coverage/lcov.info"
